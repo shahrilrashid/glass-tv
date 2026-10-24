@@ -55,7 +55,7 @@ final class WeatherPrayerPanel {
                 FrameLayout.LayoutParams.WRAP_CONTENT));
 
         LinearLayout prayer = panel(activity);
-        TextView prayerText = text(activity, "WAKTU SOLAT · KUALA LANGAT\\nMemuatkan waktu solat…", 14);
+        TextView prayerText = text(activity, "WAKTU SOLAT · KUALA LANGAT\nMemuatkan waktu solat…", 14);
         prayer.addView(prayerText);
         LinearLayout.LayoutParams prayerLp = new LinearLayout.LayoutParams(dp(activity, 390),
                 FrameLayout.LayoutParams.WRAP_CONTENT);
