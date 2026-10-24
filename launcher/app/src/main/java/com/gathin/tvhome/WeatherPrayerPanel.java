@@ -47,19 +47,19 @@ final class WeatherPrayerPanel {
         TextView weatherText = text(activity, "CUACA\nMemuatkan cuaca…", 14);
         weather.addView(weatherText);
         LinearLayout stack = new LinearLayout(activity);
-        stack.setOrientation(LinearLayout.VERTICAL);
+        stack.setOrientation(LinearLayout.HORIZONTAL);
         stack.setGravity(Gravity.TOP);
         stack.setFocusable(false);
         stack.setClickable(false);
-        stack.addView(weather, new LinearLayout.LayoutParams(dp(activity, 290),
+        stack.addView(weather, new LinearLayout.LayoutParams(dp(activity, 190),
                 FrameLayout.LayoutParams.WRAP_CONTENT));
 
         LinearLayout prayer = panel(activity);
         TextView prayerText = text(activity, "WAKTU SOLAT · KUALA LANGAT\\nMemuatkan waktu solat…", 14);
         prayer.addView(prayerText);
-        LinearLayout.LayoutParams prayerLp = new LinearLayout.LayoutParams(dp(activity, 290),
+        LinearLayout.LayoutParams prayerLp = new LinearLayout.LayoutParams(dp(activity, 390),
                 FrameLayout.LayoutParams.WRAP_CONTENT);
-        prayerLp.topMargin = dp(activity, 12);
+        prayerLp.leftMargin = dp(activity, 12);
         stack.addView(prayer, prayerLp);
 
         FrameLayout.LayoutParams stackLp = new FrameLayout.LayoutParams(
@@ -83,9 +83,9 @@ final class WeatherPrayerPanel {
         box.setOrientation(LinearLayout.VERTICAL);
         box.setPadding(dp(a, 16), dp(a, 12), dp(a, 16), dp(a, 12));
         GradientDrawable bg = new GradientDrawable();
-        bg.setColor(0xCC111820);
+        bg.setColor(0x883078C8);
         bg.setCornerRadius(dp(a, 18));
-        bg.setStroke(dp(a, 1), 0x557FFFFF);
+        bg.setStroke(dp(a, 1), 0x997FD8FF);
         box.setBackground(bg);
         box.setElevation(dp(a, 5));
         box.setFocusable(false);
