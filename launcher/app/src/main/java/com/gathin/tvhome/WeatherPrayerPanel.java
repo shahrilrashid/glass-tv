@@ -7,7 +7,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -175,12 +174,12 @@ final class WeatherPrayerPanel {
             String date = p.optString("date", "");
             StringBuilder b = new StringBuilder("WAKTU SOLAT · KUALA LANGAT\n");
             if (!date.isEmpty()) b.append(date).append('\n');
-            b.append("Subuh   ").append(time(p, "fajr")).append('\n')
-             .append("Syuruk  ").append(time(p, "syuruk")).append('\n')
-             .append("Zohor   ").append(time(p, "dhuhr")).append('\n')
-             .append("Asar    ").append(time(p, "asr")).append('\n')
-             .append("Maghrib ").append(time(p, "maghrib")).append('\n')
-             .append("Isyak   ").append(time(p, "isha"));
+            b.append("☾  Subuh   ").append(time(p, "fajr")).append('\n')
+             .append("☀  Syuruk  ").append(time(p, "syuruk")).append('\n')
+             .append("◉  Zohor   ").append(time(p, "dhuhr")).append('\n')
+             .append("◷  Asar    ").append(time(p, "asr")).append('\n')
+             .append("☼  Maghrib ").append(time(p, "maghrib")).append('\n')
+             .append("★  Isyak   ").append(time(p, "isha"));
             return b.toString();
         } catch (Exception e) {
             return "WAKTU SOLAT · KUALA LANGAT\nWaktu solat belum dapat dimuatkan.\nSemak sambungan internet.";
@@ -192,19 +191,20 @@ final class WeatherPrayerPanel {
         return v.length() >= 5 ? v.substring(0, 5) : v;
     }
 
-    /** Unicode weather symbols are supported on Android TV and keep the forecast compact. */
+    /** Clean, compact weather symbols for sun, cloud, rain, fog and storms. */
     private static String weatherIcon(int code) {
-        if (code == 0) return "☀️";
-        if (code == 1 || code == 2) return "🌤️";
-        if (code == 3) return "☁️";
-        if (code == 45 || code == 48) return "🌫️";
-        if (code >= 51 && code <= 57) return "🌦️";
-        if (code >= 61 && code <= 67) return "🌧️";
-        if (code >= 71 && code <= 77) return "❄️";
-        if (code >= 80 && code <= 82) return "🌧️";
-        if (code >= 85 && code <= 86) return "🌨️";
-        if (code >= 95) return "⛈️";
-        return "🌡️";
+        if (code == 0) return "☀";
+        if (code == 1) return "◐";
+        if (code == 2) return "☼";
+        if (code == 3) return "☁";
+        if (code == 45 || code == 48) return "≋";
+        if (code >= 51 && code <= 57) return "☂";
+        if (code >= 61 && code <= 67) return "☂";
+        if (code >= 71 && code <= 77) return "❄";
+        if (code >= 80 && code <= 82) return "☂";
+        if (code >= 85 && code <= 86) return "❄";
+        if (code >= 95) return "⚡";
+        return "°";
     }
 
     private static String weatherName(int code) {
