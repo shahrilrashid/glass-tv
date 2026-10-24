@@ -265,11 +265,15 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         wallpapers = cfg.wallpapers;
         wallpaperIntervalMs = cfg.wallpaperIntervalMs;
         placesMode = cfg.places;
-        // Places only, when they are on: never the theme's own pictures, even before the first
-        // week's places have arrived.
-        if (placesMode) wallpapers = PlaceWallpapers.list(this);
+        // Prefer the configured place rotation when it has pictures. If it has none, use the
+        // bundled aquarium image as the built-in Glass TV default.
+        if (placesMode) {
+            wallpapers = PlaceWallpapers.list(this);
+            if (wallpapers.isEmpty()) placesMode = false;
+        }
         if (!wallpapers.isEmpty()) showNextWallpaper(false);
         else if (cfg.wallpaper != null && !placesMode) setWallpaper(decodeWallpaper(cfg.wallpaper), false);
+        else setWallpaper(android.graphics.BitmapFactory.decodeResource(getResources(), R.drawable.glass_tv_aquarium_wallpaper), false);
         glass = findViewById(R.id.glass);
         ambient = findViewById(R.id.ambient);
         Backdrop.setWorker(wallDecoder, handler);
