@@ -1465,6 +1465,17 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
 
     private void updateShamsiDate() {
         if (shamsi) shamsiDate.setText(Shamsi.today());
+        TextView hijri = findViewById(R.id.hijriDate);
+        if (hijri != null) {
+            java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("d MMMM yyyy", new java.util.Locale("ms", "MY"));
+            fmt.setCalendar(new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("Asia/Kuala_Lumpur"), new java.util.Locale("ms", "MY")));
+            java.util.Calendar islamic = android.icu.util.IslamicCalendar.getInstance(
+                    java.util.TimeZone.getTimeZone("Asia/Kuala_Lumpur"), new java.util.Locale("ms", "MY"));
+            islamic.setTimeInMillis(System.currentTimeMillis());
+            java.text.SimpleDateFormat hijriFmt = new java.text.SimpleDateFormat("d MMMM yyyy", new java.util.Locale("ms", "MY"));
+            hijriFmt.setCalendar(islamic);
+            hijri.setText("Hijri  " + hijriFmt.format(new java.util.Date()));
+        }
     }
 
     /** Shows the Wi-Fi network name on the button when we can read it, otherwise the connection type. */
