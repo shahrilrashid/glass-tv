@@ -46,18 +46,27 @@ final class WeatherPrayerPanel {
         LinearLayout weather = panel(activity);
         TextView weatherText = text(activity, "CUACA\nMemuatkan cuaca…", 14);
         weather.addView(weatherText);
-        FrameLayout.LayoutParams top = new FrameLayout.LayoutParams(dp(activity, 290),
-                FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.TOP | Gravity.RIGHT);
-        top.setMargins(margin, dp(activity, 22), margin, 0);
-        root.addView(weather, top);
+        LinearLayout stack = new LinearLayout(activity);
+        stack.setOrientation(LinearLayout.VERTICAL);
+        stack.setGravity(Gravity.TOP);
+        stack.setFocusable(false);
+        stack.setClickable(false);
+        stack.addView(weather, new LinearLayout.LayoutParams(dp(activity, 290),
+                FrameLayout.LayoutParams.WRAP_CONTENT));
 
         LinearLayout prayer = panel(activity);
-        TextView prayerText = text(activity, "WAKTU SOLAT · KUALA LANGAT\nMemuatkan waktu solat…", 14);
+        TextView prayerText = text(activity, "WAKTU SOLAT · KUALA LANGAT\\nMemuatkan waktu solat…", 14);
         prayer.addView(prayerText);
-        FrameLayout.LayoutParams bottom = new FrameLayout.LayoutParams(dp(activity, 290),
-                FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM | Gravity.RIGHT);
-        bottom.setMargins(margin, 0, margin, dp(activity, 22));
-        root.addView(prayer, bottom);
+        LinearLayout.LayoutParams prayerLp = new LinearLayout.LayoutParams(dp(activity, 290),
+                FrameLayout.LayoutParams.WRAP_CONTENT);
+        prayerLp.topMargin = dp(activity, 12);
+        stack.addView(prayer, prayerLp);
+
+        FrameLayout.LayoutParams stackLp = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT,
+                Gravity.TOP | Gravity.RIGHT);
+        stackLp.setMargins(0, dp(activity, 22), margin, 0);
+        root.addView(stack, stackLp);
 
         IO.execute(() -> {
             String w = loadWeather();
