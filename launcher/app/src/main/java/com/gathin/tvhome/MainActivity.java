@@ -304,20 +304,20 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             date.setTextSize(11f);
             date.setPadding(0, (int) (4 * density), 0, 0);
         }
-        // Beside the clock, the date sits on the digits' baseline, and AM/PM rests halfway between
-        // the top of the digits and the top of the date, its letters' foot on that line.
-        TextView clock = findViewById(R.id.clock), amPm = findViewById(R.id.ampm), dateLine = findViewById(R.id.date);
+        // Keep AM/PM beside the clock, but move all date lines into their own row below it.
+        // The date previously shared the narrow AM/PM frame, which caused Hijri and weekday text
+        // to overlap or be clipped on TV screens.
+        TextView amPm = findViewById(R.id.ampm);
         View dateBlock = findViewById(R.id.dateBlock);
-        dateBlock.setTranslationY(dateLine.getPaint().getFontMetrics().descent - clock.getPaint().getFontMetrics().descent);
-        // Placed once the whole column is laid out, AM/PM and the date both.
-        ((View) dateBlock.getParent()).addOnLayoutChangeListener((v, l, t, r, b, ol, ot, or, ob) -> {
-            android.graphics.Rect cap = new android.graphics.Rect();
-            dateLine.getPaint().getTextBounds("O", 0, 1, cap);
-            float capsAtTop = ClockDream.capInset(clock, "0") - ClockDream.capInset(amPm, "AM");
-            float foot = amPm.getTop() + capsAtTop + amPm.getBaseline();
-            float dateTop = dateBlock.getTop() + dateBlock.getTranslationY() + dateLine.getTop() + dateLine.getBaseline() + cap.top;
-            amPm.setTranslationY(Math.round(capsAtTop + (foot + dateTop) / 2f - foot));
-        });
+        LinearLayout leftBlock = findViewById(R.id.leftBlock);
+        ViewGroup dateParent = (ViewGroup) dateBlock.getParent();
+        dateParent.removeView(dateBlock);
+        LinearLayout.LayoutParams dateParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dateParams.topMargin = (int) (3 * density);
+        leftBlock.addView(dateBlock, dateParams);
+        dateBlock.setTranslationY(0f);
+        amPm.setTranslationY(0f);
         vpnApp = cfg.vpnApp;
         moduleCards = cfg.moduleCards;
         hiddenApps = new HashSet<>(cfg.hiddenApps);
