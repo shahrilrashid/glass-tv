@@ -161,6 +161,20 @@
                                 android:includeFontPadding="false"
                                 android:visibility="gone" />
 
+                            <TextView
+                                android:id="@+id/hijriDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:textColor="#A6FFFFFF"
+                                android:textSize="13sp"
+                                android:fontFamily="@font/outfit"
+                                android:fontVariationSettings="'wght' 400"
+                                android:letterSpacing="0.02"
+                                android:includeFontPadding="false" />
+
                             <TextClock
                                 android:id="@+id/date"
                                 android:gravity="left"
