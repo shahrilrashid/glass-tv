@@ -140,7 +140,9 @@ final class WeatherPrayerPanel {
             JSONArray highs = daily.getJSONArray("temperature_2m_max");
             JSONArray lows = daily.getJSONArray("temperature_2m_min");
             StringBuilder b = new StringBuilder("CUACA · KUALA LANGAT\n");
-            b.append(weatherName(now.optInt("weather_code", -1))).append("  ")
+            int currentCode = now.optInt("weather_code", -1);
+            b.append(weatherIcon(currentCode)).append("  ")
+             .append(weatherName(currentCode)).append("  ")
              .append(Math.round(now.optDouble("temperature_2m", 0))).append("°C")
              .append("  ·  Kelembapan ").append(Math.round(now.optDouble("relative_humidity_2m", 0))).append("%\n\n");
             SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -148,8 +150,10 @@ final class WeatherPrayerPanel {
             for (int i = 0; i < dates.length() && i < 4; i++) {
                 Date date = in.parse(dates.getString(i));
                 String day = date == null ? dates.getString(i) : out.format(date);
-                b.append(day).append("  ").append(weatherName(codes.optInt(i, -1)))
-                 .append("  ").append(Math.round(lows.optDouble(i, 0))).append("°–")
+                int code = codes.optInt(i, -1);
+                b.append(day).append("  ").append(weatherIcon(code)).append(" ")
+                 .append(weatherName(code)).append("  ")
+                 .append(Math.round(lows.optDouble(i, 0))).append("°–")
                  .append(Math.round(highs.optDouble(i, 0))).append("°C\n");
             }
             return b.toString().trim();
@@ -186,6 +190,21 @@ final class WeatherPrayerPanel {
     private static String time(JSONObject o, String key) {
         String v = o.optString(key, "--:--");
         return v.length() >= 5 ? v.substring(0, 5) : v;
+    }
+
+    /** Unicode weather symbols are supported on Android TV and keep the forecast compact. */
+    private static String weatherIcon(int code) {
+        if (code == 0) return "☀️";
+        if (code == 1 || code == 2) return "🌤️";
+        if (code == 3) return "☁️";
+        if (code == 45 || code == 48) return "🌫️";
+        if (code >= 51 && code <= 57) return "🌦️";
+        if (code >= 61 && code <= 67) return "🌧️";
+        if (code >= 71 && code <= 77) return "❄️";
+        if (code >= 80 && code <= 82) return "🌧️";
+        if (code >= 85 && code <= 86) return "🌨️";
+        if (code >= 95) return "⛈️";
+        return "🌡️";
     }
 
     private static String weatherName(int code) {
