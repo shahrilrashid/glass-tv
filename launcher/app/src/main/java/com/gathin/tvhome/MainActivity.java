@@ -1470,11 +1470,12 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("d MMMM yyyy", new java.util.Locale("ms", "MY"));
             fmt.setCalendar(new java.util.GregorianCalendar(java.util.TimeZone.getTimeZone("Asia/Kuala_Lumpur"), new java.util.Locale("ms", "MY")));
             android.icu.util.IslamicCalendar islamic = new android.icu.util.IslamicCalendar(
-                    java.util.TimeZone.getTimeZone("Asia/Kuala_Lumpur"), new java.util.Locale("ms", "MY"));
+                    android.icu.util.TimeZone.getTimeZone("Asia/Kuala_Lumpur"), new java.util.Locale("ms", "MY"));
             islamic.setTimeInMillis(System.currentTimeMillis());
-            java.text.SimpleDateFormat hijriFmt = new java.text.SimpleDateFormat("d MMMM yyyy", new java.util.Locale("ms", "MY"));
-            hijriFmt.setCalendar(islamic);
-            hijri.setText("Hijri  " + hijriFmt.format(new java.util.Date()));
+            hijri.setText("Hijri  " + islamic.get(android.icu.util.Calendar.DAY_OF_MONTH)
+                    + " " + islamic.getDisplayName(android.icu.util.Calendar.MONTH, android.icu.util.Calendar.LONG,
+                    new java.util.Locale("ms", "MY"))
+                    + " " + islamic.get(android.icu.util.Calendar.YEAR));
         }
     }
 
